@@ -11,7 +11,7 @@ const TermTranslationGame = ({ term, onWin }) => {
           <div style={{fontSize:34,flexShrink:0}}>🌸</div>
           <div>
             <div className="press-start" style={{fontSize:7,color:"#FF69B4",marginBottom:8}}>BLOSSOM SAYS:</div>
-            <div className="vt323" style={{fontSize:20,color:"#444",lineHeight:1.5}}>Can you translate this meaning… in the language of your own heart? 📚</div>
+            <div className="vt323" style={{fontSize:20,color:"#444",lineHeight:1.5}}>Can you translate this term… in the language of your own heart? 📚</div>
           </div>
         </div>
       </div>
