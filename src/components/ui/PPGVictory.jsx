@@ -5,8 +5,8 @@ const PPGVictory = ({ onDone }) => {
 
   useEffect(() => {
     const audio = audioRef.current;
-    audio.loop = true; // Loops the background music
-    audio.volume = 0.6; // Sets volume to 60%
+    audio.loop = true; 
+    audio.volume = 0.6; 
     
     audio.play().catch(err => console.log("Audio play blocked:", err));
 
@@ -16,11 +16,10 @@ const PPGVictory = ({ onDone }) => {
     };
   }, []);
 
-
   const girls = [
     { name: "BLOSSOM", color: "#FF69B4", img: "/assets/girls/blossom.png", delay: "0s" },
-    { name: "BUBBLES", color: "#00BFFF", img: "/assets/girls/bubbles.png", delay: "1.2s" },
-    { name: "BUTTERCUP", color: "#32CD32", img: "/assets/girls/buttercup.png", delay: "2.4s" },
+    { name: "BUBBLES", color: "#00BFFF", img: "/assets/girls/bubbles.png", delay: "1.5s" },
+    { name: "BUTTERCUP", color: "#32CD32", img: "/assets/girls/buttercup.png", delay: "3.0s" }, // Adjusted timing
   ];
 
   return (
@@ -29,27 +28,38 @@ const PPGVictory = ({ onDone }) => {
         🏆 TOWNSVILLE SAVED! 🏆
       </div>
 
-      <div style={{ position: "relative", width: "100%", height: 180, overflow: "hidden" }}>
+      {/* Increased height to 250 to accommodate the 200px character size */}
+      <div style={{ position: "relative", width: "100%", height: 250, overflow: "hidden" }}>
         {girls.map(g => (
           <div key={g.name} style={{
-            position: "absolute", top: "50%", transform: "translateY(-50%)",
-            display: "flex", alignItems: "center", gap: 0,
-            animation: `ppg-fly 5s ease-in-out ${g.delay} infinite` 
+            position: "absolute", 
+            top: "50%", 
+            transform: "translateY(-50%)",
+            display: "flex", 
+            alignItems: "center", 
+            gap: 0,
+            /* Changed to 'infinite backwards' to ensure smooth start-up after delay */
+            animation: `ppg-fly 6s ease-in-out ${g.delay} infinite backwards` 
           }}>
             {/* Gradient Trail */}
             <div style={{
-              width: 140, height: 40,
+              width: 140, 
+              height: 35,
               background: `linear-gradient(90deg, transparent, ${g.color}66, ${g.color})`,
               clipPath: "polygon(100% 0%, 100% 100%, 0% 60%, 0% 40%)",
-              marginRight: -50, marginTop:"18px", opacity: 0.8
+              marginRight: -50, 
+              marginTop: "20px", 
+              opacity: 0.8
             }} />
 
             {/* Character PNG */}
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
               <div style={{ 
-                width: 200, height: 200, 
-                display: "flex", alignItems: "center", justifyContent: "center", 
-                overflow: "hidden" 
+                width: 180, 
+                height: 180, 
+                display: "flex", 
+                alignItems: "center", 
+                justifyContent: "center"
               }}>
                 <img src={g.img} alt={g.name} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
               </div>
@@ -71,14 +81,14 @@ const PPGVictory = ({ onDone }) => {
         className="btn-pixel font-bold press-start" 
         onClick={() => {
           onDone(); 
-          window.location.reload(); // Restarts the browser/game logic
+          window.location.reload(); 
         }} 
         style={{ 
-          padding: "10px 24px", 
+          padding: "12px 28px", 
           background: "#FF69B4", 
           color: "#fff", 
           fontSize: 10, 
-          marginTop: 6 
+          marginTop: 10 
         }}
       >
         AMAZE AMAZE AMAZE!
