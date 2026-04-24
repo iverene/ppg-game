@@ -30,14 +30,14 @@ function CommandCenter() {
           <div className="inline-flex items-center gap-4 bg-white border-4 border-[#FF69B4] p-3 shadow-[6px_6px_0_#000] mt-5 mb-3">
             <div className="text-[28px]">🌸</div>
             <div>
-              <div className="press-start text-lg text-[#FF69B4] tracking-[2px]">CHAPTER 11</div>
-              <div className="vt323 text-[30px] text-[#666] mt-1">Project Procurement Management</div>
+              <div className="press-start text-md text-[#FF69B4] tracking-[2px]">CHAPTER 11</div>
+              <div className="vt323 text-[25px] text-[#666] mt-1">Project Procurement Management</div>
             </div>
             <div className="text-[28px]">💙</div>
           </div>
         </div>
 
-        <div className="press-start text-md text-[#bbb] mt-10 mb-1 animate-[blink_2s_step-end_infinite]">
+        <div className="press-start text-md text-[#bbb] mt-7 mb-1 animate-[blink_2s_step-end_infinite]">
           ▶ SELECT A STAGE TO BEGIN ◀
         </div>
 

@@ -29,11 +29,11 @@ const MonitorCard = ({ partKey, onClick, hasStarted }) => {
         display:"flex",flexDirection:"column",alignItems:"center",gap:8
       }}>
         <div style={{fontSize:30}}>{emojis[partKey]}</div>
-        <div className="press-start" style={{fontSize:10,color:part.color,textAlign:"center",lineHeight:1.9}}>
+        <div className="press-start" style={{fontSize:8,color:part.color,textAlign:"center",lineHeight:1.9}}>
           {part.label.toUpperCase()}
         </div>
         <div style={{width:"100%",height:2,background:`repeating-linear-gradient(90deg,${part.color},transparent 4px,${part.color} 8px)`}}/>
-        <div className="vt323" style={{fontSize:20,color:"#999"}}>{hasStarted?"ACCOMPLISHED ★":"START"}</div>
+        <div className="vt323" style={{fontSize:18,color:"#999"}}>{hasStarted?"ACCOMPLISHED ★":"START"}</div>
       </div>
       <div style={{width:36,height:8,background:hasStarted?`${part.color}66`:"#ddd",border:"3px solid #000",borderTop:"none"}}/>
       <div style={{width:62,height:7,background:hasStarted?`${part.color}44`:"#eee",border:"3px solid #000"}}/>
