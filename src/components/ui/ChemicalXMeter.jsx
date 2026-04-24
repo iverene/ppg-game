@@ -15,7 +15,7 @@ const ChemicalXMeter = ({ stagesStarted }) => {
       padding: "8px 16px", boxShadow: "4px 4px 0 #000",
       whiteSpace: "nowrap"
     }}>
-      <div className="press-start" style={{ fontSize: 10, color: "#7700cc" }}>⚗ CHEM X</div>
+      <div className="press-start" style={{ fontSize: 10, color: "#7700cc" }}>🧪 CHEM X</div>
       <div style={{ display: "flex", gap: 4 }}>
         {PARTS.map((pk, i) => {
           const done = stagesStarted.has(pk);
