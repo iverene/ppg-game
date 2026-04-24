@@ -11,6 +11,10 @@ const TimebombGame = ({ data, onWin, onLose }) => {
   const [feedback, setFeedback] = useState(null);
   const [shake, setShake] = useState(false);
   const [done, setDone] = useState(false);
+  
+  // NEW: Track the result of each question (true = correct, false = wrong)
+  const [answersHistory, setAnswersHistory] = useState([]);
+  
   const pendingScore = useRef(0);
 
   const q = questions[qi];
@@ -31,9 +35,12 @@ const TimebombGame = ({ data, onWin, onLose }) => {
     const ns = correct ? pendingScore.current + 1 : pendingScore.current;
     pendingScore.current = ns;
     
+    // Store the result of this question in history
+    setAnswersHistory(prev => [...prev, correct]);
+    
     if (isLast) {
       setScore(ns);
-      setDone(true); // Switches to the results view
+      setDone(true);
     } else {
       setQi((p) => p + 1);
       setSelected(null);
@@ -74,34 +81,14 @@ const TimebombGame = ({ data, onWin, onLose }) => {
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 16, padding: 28 }}>
         <div className="press-start" style={{ fontSize: 9, color: "#333", textAlign: "center" }}>⏣ TIMEBOMB RESULTS</div>
         <div style={{ background: "#fff", border: "4px solid #000", padding: "24px 40px", display: "flex", flexDirection: "column", alignItems: "center", gap: 12, boxShadow: "6px 6px 0 #000", animation: "score-pop 0.5s ease" }}>
-          
-          {/* Header Stats */}
           <div className="vt323" style={{ fontSize: 32, color: "#000", fontWeight: "bold" }}>TOTAL SCORE: {score} / {total}</div>
           <div className="vt323" style={{ fontSize: 22, color: "#666", marginBottom: 8 }}>{pct}% accuracy</div>
-          
-          {/* Visual Feedback */}
           <div style={{ fontSize: 60, animation: "float 2s ease-in-out infinite" }}>{pct >= 60 ? "🌸" : "💀"}</div>
           <div className="press-start" style={{ fontSize: 26, color: gCol, textShadow: "3px 3px 0 #000" }}>GRADE: {grade}</div>
-          
-          {/* Progress Bar */}
           <div style={{ width: "100%", height: 16, background: "#eee", border: "3px solid #000", overflow: "hidden", position: "relative", marginTop: 8 }}>
             <div style={{ height: "100%", width: `${pct}%`, background: gCol, transition: "width 1.2s ease" }} />
           </div>
-
-          {/* Manual Exit Button */}
-          <button 
-            className="btn-pixel" 
-            onClick={() => score > 0 ? onWin?.() : onLose?.()} 
-            style={{ 
-              marginTop: 24, 
-              padding: "12px 24px", 
-              background: gCol, 
-              color: "#fff", 
-              fontSize: 10 
-            }}
-          >
-            CONTINUE →
-          </button>
+          <button className="btn-pixel" onClick={() => score > 0 ? onWin?.() : onLose?.()} style={{ marginTop: 24, padding: "12px 24px", background: gCol, color: "#fff", fontSize: 10 }}>CONTINUE →</button>
         </div>
       </div>
     );
@@ -109,15 +96,29 @@ const TimebombGame = ({ data, onWin, onLose }) => {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 14, padding: 16 }}>
-      {/* Question Tracker */}
+      {/* Updated Question Tracker Logic */}
       <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-        {questions.map((_, i) => (
-          <div key={i} style={{ width: 14, height: 14, border: "3px solid #000", background: i < qi ? "#32CD32" : i === qi ? "#FFD700" : "#eee" }} />
-        ))}
+        {questions.map((_, i) => {
+          let bgColor = "#eee"; // Default (not reached)
+          if (i === qi) {
+             bgColor = "#FFD700"; // Current Question
+          } else if (i < qi) {
+             // Past Questions: Green if correct in history, Red if false
+             bgColor = answersHistory[i] ? "#32CD32" : "#e03333";
+          }
+          
+          return (
+            <div key={i} style={{ 
+              width: 14, height: 14, 
+              border: "3px solid #000", 
+              background: bgColor,
+              transition: "background 0.3s ease"
+            }} />
+          );
+        })}
         <div className="vt323" style={{ fontSize: 18, color: "#666", marginLeft: 8 }}>{qi + 1}/{total}</div>
       </div>
 
-      {/* Bomb Animation */}
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
         <div style={{ fontSize: 58, animation: exploded ? `explode 0.5s ease forwards` : `bomb-tick ${time <= 5 ? 0.22 : 0.7}s ease-in-out infinite` }}>{exploded ? "💥" : "💣"}</div>
         {!exploded && (
@@ -125,31 +126,15 @@ const TimebombGame = ({ data, onWin, onLose }) => {
         )}
       </div>
 
-      {/* Answer Feedback */}
       {feedback && (
         <div className="vt323" style={{ fontSize: 22, textAlign: "center", color: feedback.startsWith("✅") ? "#1ea831" : "#e03333", animation: "pop-in 0.3s ease" }}>{feedback}</div>
       )}
 
-      {/* Question Text */}
       <div className="vt323" style={{ fontSize: 22, color: "#222", textAlign: "center", background: "#fff", border: "4px solid #000", padding: "12px 18px", boxShadow: "4px 4px 0 #000", animation: shake ? "shake 0.5s ease" : "", maxWidth: 480, lineHeight: 1.4 }}>{q.question}</div>
 
-      {/* Answer Buttons */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, width: "100%", maxWidth: 480 }}>
         {q.options.map((opt, i) => (
-          <button 
-            key={i} 
-            className="btn-pixel vt323" 
-            onClick={() => pick(opt)} 
-            style={{ 
-              padding: "12px 10px", 
-              fontSize: 18, 
-              background: selected === opt ? (opt === q.correct ? "#32CD32" : "#e03333") : (selected ? "#f5f5f5" : "#fff"), 
-              color: selected === opt ? "#fff" : "#222", 
-              pointerEvents: selected ? "none" : "auto" 
-            }}
-          >
-            {opt}
-          </button>
+          <button key={i} className="btn-pixel vt323" onClick={() => pick(opt)} style={{ padding: "12px 10px", fontSize: 18, background: selected === opt ? (opt === q.correct ? "#32CD32" : "#e03333") : (selected ? "#f5f5f5" : "#fff"), color: selected === opt ? "#fff" : "#222", pointerEvents: selected ? "none" : "auto" }}>{opt}</button>
         ))}
       </div>
     </div>
