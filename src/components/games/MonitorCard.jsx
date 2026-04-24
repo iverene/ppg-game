@@ -4,6 +4,7 @@ import { GAME_DATA } from "../../data/GameData";
 const MonitorCard = ({ partKey, onClick, hasStarted }) => {
   const part   = GAME_DATA[partKey];
   const emojis = { 
+    procurement_planning:"📝",
     solicitation_planning:"📋", 
     solicitation:"📢", 
     source_selection:"🔍", 

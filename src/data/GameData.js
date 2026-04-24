@@ -1,4 +1,30 @@
 export const GAME_DATA = {
+  procurement_planning: {
+    label: "Procurement Planning",
+    color: "#DF414D",
+    timebomb: [
+      { question: "What technique determines if a product can be produced cost-effectively in-house?", options: ["Expert Judgment", "Make-or-Buy Analysis", "Market Research", "Contract Selection"], correct: "Make-or-Buy Analysis" },
+      { question: "Which contract type involves a fixed total price for a well-defined product?", options: ["Unit Price", "Cost Reimbursable", "Fixed Price", "Time and Materials"], correct: "Fixed Price" },
+      { question: "What is the primary factor often cited as a common constraint in procurement?", options: ["Staffing", "Quality", "Funds availability", "Risk"], correct: "Funds availability" },
+      { question: "Which output describes how remaining procurement processes will be managed?", options: ["Scope Statement", "Procurement Management Plan", "Statement of Work", "Market Conditions"], correct: "Procurement Management Plan" },
+      { question: "Direct costs are incurred for the exclusive benefit of what?", options: ["The Seller", "The Project", "The Performing Organization", "The Marketplace"], correct: "The Project" },
+    ],
+    mix_and_match: [
+      { term: "Fixed Price", definition: "A fixed total price for a well-defined product[cite: 168]." },
+      { term: "Cost Reimbursable", definition: "Payment to the seller for its actual costs[cite: 171]." },
+      { term: "Unit Price", definition: "Paid a preset amount per unit of service[cite: 179]." },
+      { term: "Indirect Costs", definition: "Overhead costs calculated as a percentage of direct costs[cite: 174, 177]." },
+    ],
+    term_translation: "Make-or-Buy Analysis",
+    chained_together: { 
+      question: "Name the 2 Outputs of Procurement Planning", 
+      answers: ["Procurement Management Plan", "Statement of Work"] 
+    },
+    guess_the_imposter: { 
+      options: ["Make-or-Buy Analysis", "Expert Judgment", "Contract Type Selection", "Advertising"], 
+      correct: "Advertising" // Advertising is a Tool/Technique for Solicitation [cite: 269]
+    },
+  },
   solicitation_planning: {
     label: "Solicitation Planning",
     color: "#FF69B4",
