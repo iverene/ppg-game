@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&display=swap');
+
+@import "tailwindcss";
+
+
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: #e8f4ff; overflow-x: hidden; }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #cce4ff; }
+::-webkit-scrollbar-thumb { background: #FF69B4; border: 2px solid #000; }
+
+/* Global Font Classes */
+.press-start { font-family: 'Press Start 2P', monospace; }
+.vt323 { font-family: 'VT323', monospace; }
+
+/* Core Animations from Original File */
+@keyframes scroll-city { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+@keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-8px)} 40%{transform:translateX(8px)} 60%{transform:translateX(-5px)} 80%{transform:translateX(5px)} }
+@keyframes explode { 0%{transform:scale(0.5);opacity:1} 60%{transform:scale(1.6);opacity:1} 100%{transform:scale(2.5);opacity:0} }
+@keyframes chain-in { from{transform:scaleX(0);opacity:0} to{transform:scaleX(1);opacity:1} }
+@keyframes ppg-fly { 0%{left:-140px;opacity:0} 8%{opacity:1} 92%{opacity:1} 100%{left:110%;opacity:0} }
+@keyframes countdown-pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.14)} }
+@keyframes bomb-tick { 0%,100%{transform:rotate(-6deg)} 50%{transform:rotate(6deg)} }
+@keyframes heart-beat { 0%,100%{transform:scale(1)} 50%{transform:scale(1.25)} }
+@keyframes bubble-float { 0%{transform:translateY(0) rotate(0deg)} 33%{transform:translateY(-14px) rotate(2deg)} 66%{transform:translateY(-7px) rotate(-2deg)} 100%{transform:translateY(0) rotate(0deg)} }
+@keyframes victory-bounce { 0%,100%{transform:scale(1)} 30%{transform:scale(1.15) rotate(-3deg)} 60%{transform:scale(1.1) rotate(3deg)} }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+@keyframes pop-in { 0%{transform:scale(0.6);opacity:0} 70%{transform:scale(1.08)} 100%{transform:scale(1);opacity:1} }
+@keyframes cloud-drift { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+@keyframes score-pop { 0%{transform:scale(0.7);opacity:0} 70%{transform:scale(1.06)} 100%{transform:scale(1);opacity:1} }
+
+/* Pixel Button Base Styles */
+.btn-pixel {
+  @apply border-4 border-black text-white cursor-pointer text-[10px] uppercase tracking-widest relative transition-all;
+}
+.btn-pixel::after {
+  content:'';
+  @apply absolute -bottom-[5px] -right-[5px] w-full h-full bg-black -z-[1];
+}
+.btn-pixel:hover { filter:brightness(1.1); transform:translateY(-2px); color: #FFF !important; }
+.btn-pixel:active { transform:scale(0.95) translateY(0); }
+.btn-pixel:disabled { opacity:0.5; cursor:default; transform:none !important; filter:none !important; }
+
+/* Card Flipping Styles */
+.card-3d { perspective:900px; }
+.card-inner { transform-style:preserve-3d; transition:transform 0.55s cubic-bezier(.4,0,.2,1); @apply relative w-full h-full; }
+.card-inner.flipped { transform:rotateY(180deg); }
+.card-face { backface-visibility:hidden; @apply absolute inset-0; }
+.card-back-face { transform:rotateY(0deg); }
+.card-front-face { transform:rotateY(180deg); }
