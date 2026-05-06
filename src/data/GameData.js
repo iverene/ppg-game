@@ -107,7 +107,7 @@ export const GAME_DATA = {
         correct: "Contract" },
       { question: "Which tool involves clarification and mutual agreement on the structure and requirements of the contract prior to the signing of the contract.", 
         options: ["Contract","Contract Negotiation","Weighing System","Screening System"], 
-        correct: "Reasonableness of proposals" },
+        correct: "Contract Negotiation" },
       { question: "How many Tools & Techniques exist in Source Selection?", 
         options: ["2","3","4","5"], 
         correct: "4" },

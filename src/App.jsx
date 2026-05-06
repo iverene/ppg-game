@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react"; // Added useRef
 import { AppProvider, useApp } from "./context/AppContext";
 import { GAME_DATA, PARTS, GAME_LABELS } from "./data/GameData";
 
-// Components (Imported after separation)
+// Components
 import CityBg from "./components/ui/CityBg";
 import ChemicalXMeter from "./components/ui/ChemicalXMeter";
 import PPGVictory from "./components/ui/PPGVictory";
@@ -13,6 +13,33 @@ function CommandCenter() {
   const { stagesStarted } = useApp();
   const [currentStage, setCurrentStage] = useState(null);
   const [showVictory, setShowVictory] = useState(false);
+  
+  // --- AUDIO LOGIC ---
+  const [isMuted, setIsMuted] = useState(true);
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    // Initialize audio only once
+    audioRef.current = new Audio("/assets/audio/main-theme.mp3");
+    audioRef.current.loop = true;
+    audioRef.current.volume = 0.4;
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+    };
+  }, []);
+
+  const toggleMute = () => {
+    if (isMuted) {
+      audioRef.current.play().catch(err => console.log("Audio play blocked:", err));
+    } else {
+      audioRef.current.pause();
+    }
+    setIsMuted(!isMuted);
+  };
+  // -------------------
 
   useEffect(() => {
     if (stagesStarted.size >= PARTS.length && !showVictory) {
@@ -23,6 +50,22 @@ function CommandCenter() {
   return (
     <div className="min-h-screen relative">
       <CityBg />
+
+      {/* PIXEL MUTE BUTTON */}
+      <button 
+        onClick={toggleMute}
+        className="fixed top-6 left-6 z-[100] btn-pixel flex items-center justify-center"
+        style={{
+          width: "48px",
+          height: "48px",
+          background: isMuted ? "#666" : "#FF69B4",
+          border: "4px solid #000",
+          boxShadow: "4px 4px 0 #000",
+          fontSize: "20px"
+        }}
+      >
+        {isMuted ? "🔇" : "🔊"}
+      </button>
 
       <div className="relative z-10 flex flex-col items-center min-h-screen py-5 px-4 pb-24">
         {/* Title Section */}
@@ -52,7 +95,6 @@ function CommandCenter() {
             />
           ))}
         </div>
-
       </div>
 
       {currentStage && (
